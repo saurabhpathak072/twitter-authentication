@@ -2,9 +2,12 @@ const express = require("express");
 const dotenv = require("dotenv");
 const passport = require("passport");
 const cors = require("cors");
-const passportSetup = require('./config/passport-setup')
+const cookieParser = require("cookie-parser");
+const cookieSession = require("cookie-session");
+const session = require("express-session");
 
 // -------------- Import Middleware --------------------
+const passportSetup = require('./config/passport-setup')
 const { authCheck } = require("./middleware/authcheck");
 // -----------------------------------------------------
 
@@ -17,6 +20,17 @@ const app = express();
 // -------------------------------------------------------
 
 // -------------------- Middlewares ----------------------
+app.use(
+  cookieSession({
+    name:'session',
+    keys:process.env.COOKIE_KEY,
+    maxAge: 24 * 60 * 60 * 100
+  })
+)
+
+// parse cookies
+app.use(cookieParser());
+
 // initialize passport
 app.use(passport.initialize());
 
