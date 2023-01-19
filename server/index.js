@@ -1,5 +1,6 @@
 const express = require("express");
 const dotenv = require('dotenv');
+const cors = require("cors");
 
 // -------------- Import Middleware --------------------
 const { authCheck } = require("./middleware/authcheck");
@@ -11,6 +12,15 @@ const authRoutes = require('./API/routers/auth-routes');
 // ---------------------- config ------------------------
 dotenv.config();
 const app = express();
+// -------------------------------------------------------
+
+// -------------------- Middlewares ----------------------
+// Set up cors to allow us to accept request from our client
+app.use(cors({
+    origin: "http://localhost:3000", // allow to server to accept request from different origin
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true // allow session cookie from browser to pass through
+}))
 // -------------------------------------------------------
 
 // ---------------------- API Routes ---------------------
