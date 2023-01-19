@@ -6,6 +6,7 @@ const { authCheck } = require("./middleware/authcheck");
 // -----------------------------------------------------
 
 const homerouter = require('./API/routers/home');
+const authRoutes = require('./API/routers/auth-routes');
 
 // ---------------------- config ------------------------
 dotenv.config();
@@ -13,6 +14,9 @@ const app = express();
 // -------------------------------------------------------
 
 // ---------------------- API Routes ---------------------
+// Set up Auth Routes
+app.use('/auth',authRoutes);
+
 // if it's already login, send the profile response,
 // otherwise, send a 401 response that the user is not authenticated
 // authCheck before navigating to home page
