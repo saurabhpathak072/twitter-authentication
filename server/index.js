@@ -1,7 +1,11 @@
 const express = require("express");
 const dotenv = require('dotenv');
 
-const homerouter = require('./API/routers/home')
+// -------------- Import Middleware --------------------
+const { authCheck } = require("./middleware/authcheck");
+// -----------------------------------------------------
+
+const homerouter = require('./API/routers/home');
 
 // ---------------------- config ------------------------
 dotenv.config();
@@ -9,7 +13,10 @@ const app = express();
 // -------------------------------------------------------
 
 // ---------------------- API Routes ---------------------
-app.use('/home',homerouter);
+// if it's already login, send the profile response,
+// otherwise, send a 401 response that the user is not authenticated
+// authCheck before navigating to home page
+app.use('/home',authCheck,homerouter);
 // -------------------------------------------------------
 
 
