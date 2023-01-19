@@ -7,16 +7,21 @@ const cookieSession = require("cookie-session");
 const session = require("express-session");
 
 // -------------- Import Middleware --------------------
-const passportSetup = require('./config/passport-setup')
+ const {authTwitterSetup} = require('./config/passport-setup')
 const { authCheck } = require("./middleware/authcheck");
 // -----------------------------------------------------
 
 const homerouter = require("./API/routers/home");
 const authRoutes = require("./API/routers/auth-routes");
+const connectDB = require("./config/db");
+const { default: mongoose } = require("mongoose");
 
 // ---------------------- config ------------------------
 dotenv.config();
 const app = express();
+connectDB();
+authTwitterSetup();
+
 // -------------------------------------------------------
 
 // -------------------- Middlewares ----------------------
@@ -35,7 +40,7 @@ app.use(cookieParser());
 app.use(passport.initialize());
 
 // deserialize cookie from browser
-app.use(passport.deserializeUser());
+app.use(passport.session());
 
 // Set up cors to allow us to accept request from our client
 app.use(
@@ -54,7 +59,7 @@ app.use("/auth", authRoutes);
 // if it's already login, send the profile response,
 // otherwise, send a 401 response that the user is not authenticated
 // authCheck before navigating to home page
-app.use("/home", authCheck, homerouter);
+app.use("/", authCheck, homerouter);
 // -------------------------------------------------------
 
 // connect react to nodejs express server
