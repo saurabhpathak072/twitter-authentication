@@ -8,7 +8,7 @@ const authCheck=(req,res,next)=>{
         //     authenticate:false,
         //     message:"User Not has been authenticated!!"
         // })
-        next();
+        // next();
     }else{
         next()
     }

@@ -20,11 +20,11 @@ router.get("/login/success", (req, res) => {
 
 // ----------- When login failed, send failed msg ----------------------
 router.get("/login/failed", (req, res) => {
-  // res.status(401).json({
-  //   success: false,
-  //   message: "userfailed to authenticate",
-  // });
-  res.redirect("http://localhost:3000/authfailed")
+  res.status(401).json({
+    success: false,
+    message: "userfailed to authenticate",
+  });
+  // res.redirect("http://localhost:3000/authfailed")
 });
 // ---------------------------------------------------------------------
 

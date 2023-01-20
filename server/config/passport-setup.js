@@ -7,17 +7,12 @@ const authTwitterSetup = () => {
   // serialize the user.id to save in the cookie sessions
   // so the browser will remember the user when login
   passport.serializeUser((user, done) => {
-    done(null, user.id);
+    done(null, user.user.id);
   });
 
   // deserialize the cookieUserId to user in the databse
   passport.deserializeUser((id, done) => {
-    // const user = {
-    //   name: "saurabh",
-    //   screenName: "Pathak",
-    //   twitterId: "12345",
-    //   profileImageUrl: "test",
-    // };
+
     User.findById(id)
       .then((user) => {
         done(null, user);
@@ -47,12 +42,15 @@ const authTwitterSetup = () => {
             screenName: profile._json.screen_name,
             twitterId: profile._json.id_str,
             profileImageUrl: profile._json.profile_image_url,
+            followers_count: profile._json.followers_count,
+            friends_count: profile._json.friends_count,
+            statuses_count: profile._json.statuses_count
           }).save();
           if (newUser) {
-            done(null, newUser);
+            done(null, {user:newUser,token,tokenSecret});
           }
         }
-        done(null, currentUser);
+        done(null, {user:currentUser,token,tokenSecret});
       }
     )
   );

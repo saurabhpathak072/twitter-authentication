@@ -25,6 +25,7 @@ const Homepage = () => {
       })
       .then((responsejson) => {
         setAuthenticated(true);
+        console.log('responsejson : ',responsejson);
         setUser(responsejson.user);
       })
       .catch((err) => {
@@ -52,9 +53,16 @@ const Homepage = () => {
         {!authenticated ? (
           <h1>Welcome!</h1>
         ) : (
+          
           <div>
+            console.log();
             <h1>You have login succcessfully!</h1>
             <h2>Welcome {user.name}!</h2>
+            <img src={user.profileImageUrl} alt="Profile"  />
+            <h3>{user?.screenName}</h3>
+            <div>Followers : {user.followers_count}</div>
+            <div>Friends : {user.friends_count}</div>
+            <div>statuses_count: {user.statuses_count}</div>
           </div>
         )}
       </div>

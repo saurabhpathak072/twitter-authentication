@@ -6,6 +6,9 @@ const userSchema = mongoose.Schema({
   screenName: String,
   twitterId: String,
   profileImageUrl: String,
+  followers_count:Number,
+  friends_count:Number,
+  statuses_count:Number
 });
 
 const User = mongoose.model("User",userSchema);
