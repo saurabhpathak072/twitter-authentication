@@ -25,13 +25,15 @@ authTwitterSetup();
 // -------------------------------------------------------
 
 // -------------------- Middlewares ----------------------
-app.use(
-  cookieSession({
-    name:'session',
-    keys:process.env.COOKIE_KEY,
-    maxAge: 24 * 60 * 60 * 100
-  })
-)
+// app.use(
+//   cookieSession({
+//     name:'session',
+//     keys:process.env.COOKIE_KEY,
+//     maxAge: 24 * 60 * 60 * 100
+//   })
+// )
+
+app.use(session({ secret: process.env.COOKIE_KEY, name: 'session' }))
 
 // parse cookies
 app.use(cookieParser());

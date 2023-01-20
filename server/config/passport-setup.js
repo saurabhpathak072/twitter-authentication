@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose");
 const passport = require("passport");
 const TwitterStrategy = require("passport-twitter");
 const User = require("../API/models/user");
@@ -41,6 +42,7 @@ const authTwitterSetup = () => {
         // create new user if the database doesn't have this user
         if (!currentUser) {
           const newUser = await new User({
+            _id: new mongoose.Types.ObjectId(),
             name: profile._json.name,
             screenName: profile._json.screen_name,
             twitterId: profile._json.id_str,
